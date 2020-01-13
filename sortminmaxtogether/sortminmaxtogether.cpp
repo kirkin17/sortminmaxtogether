@@ -7,7 +7,7 @@ void uptodown(int*);
 
 
 const int n = 10;
-void main()
+int main()
 {
 	setlocale(LC_ALL, "rus");
 	int a[n];
@@ -61,18 +61,32 @@ void main()
 //algorithm downtoup 
 void downtoup(int *a_ptr)
 {
-	for (int i = 0; i < n - 1; i++)
+	int l = 0;
+	int r = n - 1;
+	int min = l,max = l;
+	int tmp = 0;
+	while (l < r)
 	{
-		int min = i;
-		for (int j = i + 1; j < n; j++)
+		for (int i = l + 1; i <= r; i++)
 		{
-			if (a_ptr[j] < a_ptr[min])
-				min = j;
+			if (a_ptr[i] < a_ptr[min]) min = i;
+			if (a_ptr[i] > a_ptr[max]) max = i;
 		}
-		if (min == i) continue;
-		int tmp = a_ptr[i];
-		a_ptr[i] = a_ptr[min];
+		if (min == max) break;
+		if ((r == min) && (l == max))
+		{
+			tmp = a_ptr[min];
+			a_ptr[min] = a_ptr[max];
+			a_ptr[max] = tmp;
+		}
+		tmp = a_ptr[l];
+		a_ptr[l] = a_ptr[min];
 		a_ptr[min] = tmp;
+		tmp = a_ptr[r];
+		a_ptr[r] = a_ptr[max];
+		a_ptr[max] = tmp;
+		r--;
+		l++;
 	}
 }
 
